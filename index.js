@@ -453,6 +453,12 @@ app.post("/bid-placed-node", async (req, res) => {
   // description: Big/Small
   //
   const { user_id, type, round_no, amount, bet_number, description } = req.body;
+  if(round_no && Number(round_no)<= 1){
+    return res.status(200).json({
+      msg: `Refresh your page may be your game history not updated.`,
+    });
+  }
+
   if (!user_id || !type || !round_no || !amount || !bet_number || !description)
     return res.status(200).json({
       msg: `Everything is required`,
@@ -591,8 +597,8 @@ app.post("/trx_result-node", async (req, res) => {
     });
   });
 });
+
 app.post("/trx-my-history-node", async (req, res) => {
-  
   const { gameid, userid } = req.body;
   if (!gameid || !userid)
     return res.status(200).json({
